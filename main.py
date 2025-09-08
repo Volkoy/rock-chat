@@ -359,7 +359,7 @@ def main():
     st.markdown("""
         <style>
         .stApp {
-            background: #e3c5a9;
+            background: #d2ae8a;
         }
         /* Chat message container */
         .chat-message-container {
@@ -495,7 +495,7 @@ def main():
             border-color: #a1b065 !important;
         }
         button[kind="primary"] {
-            background-color: #2b4e38;
+            background-color: #984f1a;
             border: 0;
         }
         button[kind="primary"]:hover {
