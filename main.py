@@ -87,8 +87,8 @@ def update_intimacy_score(response_text):
     
     model_positive = OpenAI(temperature=0.2)
     model_negative = OpenAI(temperature=0)
-    evaluation_positive = model_positive(prompt_positive)
-    evaluation_negative = model_negative(prompt_negative)
+    evaluation_positive = model_positive.invoke(prompt_positive)
+    evaluation_negative = model_negative.invoke(prompt_negative)
 
     calculate_positive_points = sum(
         details["points"] for category, details in positive_criteria.items()
@@ -682,7 +682,7 @@ def main():
                     vectordb = Chroma(embedding_function=OpenAIEmbeddings(), persist_directory=get_vectordb(role))
                     most_relevant_texts = vectordb.max_marginal_relevance_search(current_input, k=2, fetch_k=6, lambda_mult=1)
                     chain, role_config = get_conversational_chain(role)
-                    raw_answer = chain.run(input_documents=most_relevant_texts, question=current_input)
+                    raw_answer = chain.invoke({"input_documents": most_relevant_texts, "question": current_input})
                     answer = re.sub(r'^\s*Answer:\s*', '', raw_answer).strip()
                     
                     # Save results to session state
