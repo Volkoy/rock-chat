@@ -472,34 +472,8 @@ def main():
         }
                 
         .st-key-chat_section {
-            width: 100% !important;
-            display: flex !important;
-            flex-direction: column-reverse !important;
-            overflow-y: auto !important;
-            overflow-x: hidden !important;
-            /* Add these critical properties for production */
-            min-height: 0 !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
-
-        /* Optional: Improve scrollbar visibility in production */
-        .st-key-chat_section::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        .st-key-chat_section::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.1);
-            border-radius: 4px;
-        }
-
-        .st-key-chat_section::-webkit-scrollbar-thumb {
-            background: #984f1a;
-            border-radius: 4px;
-        }
-
-        .st-key-chat_section::-webkit-scrollbar-thumb:hover {
-            background: #7a3f15;
+            display: flex;
+            flex-direction: column-reverse;
         }
             
         .sticker-reward {
