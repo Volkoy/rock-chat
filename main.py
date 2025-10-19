@@ -569,8 +569,6 @@ def main():
                 </div>
             </div>
         """, unsafe_allow_html=True)
-        
-        chatSection = st.container(height=500, key="chat_section", border=False)
 
         input_section_col1, input_section_col2, input_section_col3 = st.columns([0.5, 0.2, 0.3], gap="small")
         with input_section_col1:
@@ -632,7 +630,9 @@ def main():
                 if "logged_interactions" in st.session_state:
                     del st.session_state["logged_interactions"]
                 st.rerun()        
-
+        
+        chatSection = st.container(height=500, key="chat_section", border=False)
+        
         if user_input and user_input != st.session_state.last_question:
             try:
                 # Set processing state first
