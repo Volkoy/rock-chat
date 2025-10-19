@@ -570,6 +570,8 @@ def main():
             </div>
         """, unsafe_allow_html=True)
         
+        chatSection = st.container(height=500, key="chat_section", border=False)
+
         input_section_col1, input_section_col2, input_section_col3 = st.columns([0.5, 0.2, 0.3], gap="small")
         with input_section_col1:
             user_input = st.chat_input(placeholder="Ask a question!")
@@ -629,9 +631,7 @@ def main():
                     del st.session_state["session_id"]
                 if "logged_interactions" in st.session_state:
                     del st.session_state["logged_interactions"]
-                st.rerun()
-        chatSection = st.container(height=500, key="chat_section", border=False)
-        
+                st.rerun()        
 
         if user_input and user_input != st.session_state.last_question:
             try:
