@@ -423,47 +423,6 @@ def main():
         .stApp {
             background: #d2ae8a;
         }
-        /* Chat message container */
-        .chat-message-container {
-            display: flex;
-            margin-bottom: 16px;
-            max-width: 80%;
-        }
-        
-        /* User message container - align right */
-        .user-container {
-            margin-left: auto;
-            justify-content: flex-end;
-        }
-        
-        /* Assistant message container - align left */
-        .assistant-container {
-            margin-right: auto;
-            justify-content: flex-start;
-        }
-        
-        /* Message bubble styling */
-        .message-bubble {
-            padding: 12px 16px;
-            border-radius: 16px;
-            word-wrap: break-word;
-        }
-        
-        /* User message styling */
-        .user-bubble {
-            background-color: #efe7e2;
-            color: #b56a2a;
-            border-radius: 16px 16px 0 16px;
-            border-color: white !important;
-            border-width: 2px;
-        }
-        
-        /* Assistant message styling */
-        .assistant-bubble {
-            background-color: white;
-            color: #b56a2a;
-            border-radius: 16px 16px 16px 0;
-        }
                 
         .stChatMessage:has([data-testid="stChatMessageAvatarCustom"]) {
             display: flex;
@@ -480,18 +439,15 @@ def main():
         }
                 
         [class*="st-key-user"] {
-            dispay: flex;
+            display: flex;
             flex-direction: row-reverse;
+            justify-content: flex-start;
             p {
                 font-size: 1.125rem;
                 color: black;
                 font-weight: medium;
             }
                 
-        }
-                
-        .stChatMessage {
-            background-color: transparent;
         }
 
         [class*="st-key-assistant"] {
@@ -514,60 +470,38 @@ def main():
                 width: 52px;
             }
         }
-        
-        .st-key-chat_section{
-            display: flex;
-            flex-direction: column-reverse;
-            justify-content: flex-end;
+                
+        .st-key-chat_section {
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column-reverse !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            /* Add these critical properties for production */
+            min-height: 0 !important;
+            -webkit-overflow-scrolling: touch !important;
         }
-        /* Remove red border outline from chat input when active */
-        .stChatInput div[data-testid="stChatInput"] > div:focus-within {
-            box-shadow: none !important;
-            border-color: #a1b065 !important;
-            border-width: 1px !important;
+
+        /* Optional: Improve scrollbar visibility in production */
+        .st-key-chat_section::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
         }
-        
-        /* Additional chat input styling */
-        .stChatInput > div {
-            border-color: #d2ae8a !important;
-            background-color: rgba(255, 255, 255, 0.8) !important;
-            border-radius: 20px !important;
+
+        .st-key-chat_section::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.1);
+            border-radius: 4px;
         }
-        
-        /* Change chat input focus state */
-        .stChatInput div[data-testid="stChatInput"]:focus-within {
-            border-color: #a1b065 !important;
-            box-shadow: 0 0 0 1px rgba(161, 176, 101, 0.5) !important;
+
+        .st-key-chat_section::-webkit-scrollbar-thumb {
+            background: #984f1a;
+            border-radius: 4px;
         }
-        
-        /* Remove default Streamlit outlines */
-        *:focus {
-            outline: none !important;
+
+        .st-key-chat_section::-webkit-scrollbar-thumb:hover {
+            background: #7a3f15;
         }
-        
-        /* Target specifically the chat input elements */
-        [data-testid="stChatInput"] input:focus {
-            box-shadow: none !important;
-            outline: none !important;
-            border-color: #a1b065 !important;
-        }
-        
-        [data-testid="stChatInput"] textarea:focus {
-            box-shadow: none !important;
-            outline: none !important;
-            border-color: #a1b065 !important;
-        }
-        button[kind="primary"] {
-            background-color: #984f1a;
-            border: 0;
-        }
-        button[kind="primary"]:hover {
-            background-color: #d2ae8a;
-            border: 0;
-        }
-        button[kind="secondary"] {
-        
-        }
+            
         .sticker-reward {
             background-color: transparent;
             border: 2px solid #d2ae8a;
@@ -720,7 +654,7 @@ def main():
                 if "logged_interactions" in st.session_state:
                     del st.session_state["logged_interactions"]
                 st.rerun()
-        chatSection = st.container(height=520, key="chat_section", border=False)
+        chatSection = st.container(height=500, key="chat_section", border=False)
         with chatSection:
             if "chat_history" not in st.session_state:
                 st.session_state.chat_history = []
