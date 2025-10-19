@@ -474,6 +474,9 @@ def main():
         .st-key-chat_section {
             display: flex;
             flex-direction: column-reverse;
+            height: 500px;
+            overflow-y: scroll;
+            scrollbar-width: thin;
         }
             
         .sticker-reward {
