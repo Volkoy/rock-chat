@@ -473,8 +473,7 @@ def main():
                 
         .st-key-chat_section {
             display: flex;
-            flex-direction: column-reverse;
-            height: 500px;
+            height: 480px;
             overflow-y: scroll;
             scrollbar-width: thin;
         }
@@ -571,7 +570,7 @@ def main():
             </div>
         """, unsafe_allow_html=True)
         
-        input_section_col1, input_section_col2, input_section_col3 = st.columns([0.6, 0.1, 0.3], gap="small")
+        input_section_col1, input_section_col2, input_section_col3 = st.columns([0.5, 0.2, 0.3], gap="small")
         with input_section_col1:
             user_input = st.chat_input(placeholder="Ask a question!")
             print(f"User input: {user_input}")
@@ -632,12 +631,6 @@ def main():
                     del st.session_state["logged_interactions"]
                 st.rerun()
         chatSection = st.container(height=500, key="chat_section", border=False)
-        with chatSection:
-            if "chat_history" not in st.session_state:
-                st.session_state.chat_history = []
-            for message in st.session_state.chat_history:
-                with chat_message(message["role"]):
-                    st.markdown(message["content"])
         
 
         if user_input and user_input != st.session_state.last_question:
@@ -652,11 +645,7 @@ def main():
                 # Add to chat history immediately
                 st.session_state.chat_history.append({"role": "user", "content": current_input})
                 st.session_state.last_question = current_input
-                
-                # Display user message
-                with chatSection:
-                    with chat_message("user"):
-                        st.markdown(current_input)
+
                 
                 with chatSection:
                     loading_placeholder = st.empty()
@@ -686,10 +675,6 @@ def main():
                     # Generate and play audio
                     speak_text(answer, loading_placeholder)
                     
-                    # Display assistant message
-                    with chatSection:
-                        with chat_message("assistant"):
-                            st.markdown(answer)
                             
                     st.session_state.audio_played = True
                     st.session_state.processing = False
@@ -703,15 +688,18 @@ def main():
                     error_msg = "I'm sorry, I had trouble processing that. Could you try again?"
                     st.session_state.chat_history.append({"role": "assistant", "content": error_msg})
                     
-                    with chatSection:
-                        with chat_message("assistant"):
-                            st.markdown(error_msg)
-                            st.error(f"Error details: {str(e)}")
             
             except Exception as outer_e:
                 # Handle any unexpected errors
                 print(f"Outer exception in user input handling: {str(outer_e)}")
                 st.error(f"An unexpected error occurred: {str(outer_e)}")
+            with chatSection:
+                if "chat_history" not in st.session_state:
+                    st.session_state.chat_history = []
+                for i in range(len(st.session_state.chat_history) - 1, -1, -1):
+                    message = st.session_state.chat_history[i]
+                    with chat_message(message["role"]):
+                        st.markdown(message["content"])
 
 
         # Gift section
